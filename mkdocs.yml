@@ -2,3 +2,7 @@ site_name: Tumugi
 pages:
   - Home: index.md
 theme: readthedocs
+site_url: https://tumugi.github.io/
+repo_url: https://github.com/tumugi/tumugi/
+site_favicon: favicon.ico
+remote_branch: master

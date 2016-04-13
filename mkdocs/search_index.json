@@ -1,0 +1,39 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Tumugi\n\n\nTumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.\n\n\nInstallation\n\n\nTumugi only support Ruby 2.0+\n\n\nAdd this line to your application's Gemfile:\n\n\ngem 'tumugi'\n\n\n\n\nAnd then execute:\n\n\n$ bundle\n\n\n\n\nOr install it yourself as:\n\n\n$ gem install tumugi\n\n\n\n\nUsage\n\n\nTODO: Put DAG here.\n\n\nYou can define workflow above as ruby code:\n\n\ntask :task1 do\n  requires [:task2, :task3]\n  run { puts 'task1#run' }\nend\n\ntask :task2 do\n  requires [:task4]\n  run { puts 'task2#run' }\nend\n\ntask :task3 do\n  requires [:task4]\n  run { puts 'task3#run' }\nend\n\ntask :task4 do\n  # You can use do ... end style\n  run do\n    puts 'task4#run'\n    sleep 3\n  end\nend\n\n\n\n\nSave these code into \nworkflow.rb\n,\nthen run this script by \ntumugi\n command like this:\n\n\n$ tumugi workflow.rb task1\n\n\n\n\nDevelopment\n\n\nAfter checking out the repo, run \nbin/setup\n to install dependencies. Then, run \nrake test\n to run the tests. You can also run \nbin/console\n for an interactive prompt that will allow you to experiment.\n\n\nTo install this gem onto your local machine, run \nbundle exec rake install\n. To release a new version, update the version number in \nversion.rb\n, and then run \nbundle exec rake release\n, which will create a git tag for the version, push git commits and tags, and push the \n.gem\n file to \nrubygems.org\n.\n\n\nContributing\n\n\nBug reports and pull requests are welcome on GitHub at https://github.com/tumugi/tumugi\n\n\nLicense\n\n\nThe gem is available as open source under the terms of the \nApache License\nVersion 2.0\n.", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#tumugi", 
+            "text": "Tumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.", 
+            "title": "Tumugi"
+        }, 
+        {
+            "location": "/#installation", 
+            "text": "Tumugi only support Ruby 2.0+  Add this line to your application's Gemfile:  gem 'tumugi'  And then execute:  $ bundle  Or install it yourself as:  $ gem install tumugi", 
+            "title": "Installation"
+        }, 
+        {
+            "location": "/#usage", 
+            "text": "TODO: Put DAG here.  You can define workflow above as ruby code:  task :task1 do\n  requires [:task2, :task3]\n  run { puts 'task1#run' }\nend\n\ntask :task2 do\n  requires [:task4]\n  run { puts 'task2#run' }\nend\n\ntask :task3 do\n  requires [:task4]\n  run { puts 'task3#run' }\nend\n\ntask :task4 do\n  # You can use do ... end style\n  run do\n    puts 'task4#run'\n    sleep 3\n  end\nend  Save these code into  workflow.rb ,\nthen run this script by  tumugi  command like this:  $ tumugi workflow.rb task1", 
+            "title": "Usage"
+        }, 
+        {
+            "location": "/#development", 
+            "text": "After checking out the repo, run  bin/setup  to install dependencies. Then, run  rake test  to run the tests. You can also run  bin/console  for an interactive prompt that will allow you to experiment.  To install this gem onto your local machine, run  bundle exec rake install . To release a new version, update the version number in  version.rb , and then run  bundle exec rake release , which will create a git tag for the version, push git commits and tags, and push the  .gem  file to  rubygems.org .", 
+            "title": "Development"
+        }, 
+        {
+            "location": "/#contributing", 
+            "text": "Bug reports and pull requests are welcome on GitHub at https://github.com/tumugi/tumugi", 
+            "title": "Contributing"
+        }, 
+        {
+            "location": "/#license", 
+            "text": "The gem is available as open source under the terms of the  Apache License\nVersion 2.0 .", 
+            "title": "License"
+        }
+    ]
+}

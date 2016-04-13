@@ -1,0 +1,4 @@
+site_name: Tumugi
+pages:
+  - Home: index.md
+theme: readthedocs

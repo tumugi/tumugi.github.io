@@ -35,4 +35,4 @@ $ ./scripts/deploy.sh
 
 Tumugi log is genereted by http://yubin-nenga.jp/hanko/
 
-![logo](./docs/)
+![logo](https://raw.githubusercontent.com/tumugi/tumugi.github.io/work/docs/images/logo.png)

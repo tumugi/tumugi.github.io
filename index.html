@@ -61,20 +61,20 @@
         
             <ul>
             
-                <li class="toctree-l3"><a href="#tumugi">Tumugi</a></li>
+                <li class="toctree-l3"><a href="#what-is-tumugi">What is tumugi ?</a></li>
                 
-                    <li><a class="toctree-l4" href="#installation">Installation</a></li>
-                
-                    <li><a class="toctree-l4" href="#usage">Usage</a></li>
-                
-                    <li><a class="toctree-l4" href="#development">Development</a></li>
-                
-                    <li><a class="toctree-l4" href="#contributing">Contributing</a></li>
-                
-                    <li><a class="toctree-l4" href="#license">License</a></li>
+            
+                <li class="toctree-l3"><a href="#releases">Releases</a></li>
                 
             
             </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="recipe1/">Recipe1 - Getting Started</a>
         
     </li>
 <li>
@@ -115,66 +115,33 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="tumugi">Tumugi</h1>
+                <p><img alt="logo" src="./images/logo_s.png" /></p>
+<h2 id="what-is-tumugi">What is tumugi ?</h2>
 <p>Tumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.</p>
-<h2 id="installation">Installation</h2>
-<p><strong>Tumugi only support Ruby 2.0+</strong></p>
-<p>Add this line to your application's Gemfile:</p>
-<pre><code class="ruby">gem 'tumugi'
-</code></pre>
+<p>Tumugi has following features:</p>
+<ul>
+<li>Define workflows using DSL and ruby code</li>
+<li>Scheduling task from the given dependencies</li>
+<li>Parallel task execution</li>
+<li>Error handling and retry</li>
+<li>Small core and enhance menbe by plugins released on RubyGems.org</li>
+</ul>
+<iframe src="https://docs.google.com/presentation/d/1KnUcKZgLNKXoi-4UFMNQHGup8Tb4_3XBhO4Ov_ZXMOY/embed?start=false&loop=false&delayms=5000&slide=5" frameborder="0" width="480" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
-<p>And then execute:</p>
-<pre><code class="bash">$ bundle
-</code></pre>
-
-<p>Or install it yourself as:</p>
-<pre><code class="bash">$ gem install tumugi
-</code></pre>
-
-<h2 id="usage">Usage</h2>
-<p><strong>TODO: Put DAG here.</strong></p>
-<p>You can define workflow above as ruby code:</p>
-<pre><code class="rb">task :task1 do
-  requires [:task2, :task3]
-  run { puts 'task1#run' }
-end
-
-task :task2 do
-  requires [:task4]
-  run { puts 'task2#run' }
-end
-
-task :task3 do
-  requires [:task4]
-  run { puts 'task3#run' }
-end
-
-task :task4 do
-  # You can use do ... end style
-  run do
-    puts 'task4#run'
-    sleep 3
-  end
-end
-</code></pre>
-
-<p>Save these code into <code>workflow.rb</code>,
-then run this script by <code>tumugi</code> command like this:</p>
-<pre><code class="bash">$ tumugi workflow.rb task1
-</code></pre>
-
-<h2 id="development">Development</h2>
-<p>After checking out the repo, run <code>bin/setup</code> to install dependencies. Then, run <code>rake test</code> to run the tests. You can also run <code>bin/console</code> for an interactive prompt that will allow you to experiment.</p>
-<p>To install this gem onto your local machine, run <code>bundle exec rake install</code>. To release a new version, update the version number in <code>version.rb</code>, and then run <code>bundle exec rake release</code>, which will create a git tag for the version, push git commits and tags, and push the <code>.gem</code> file to <a href="https://rubygems.org">rubygems.org</a>.</p>
-<h2 id="contributing">Contributing</h2>
-<p>Bug reports and pull requests are welcome on GitHub at https://github.com/tumugi/tumugi</p>
-<h2 id="license">License</h2>
-<p>The gem is available as open source under the terms of the <a href="http://www.apache.org/licenses/">Apache License
-Version 2.0</a>.</p>
+<p>Tumugi is very inspired by <a href="https://github.com/spotify/luigi">Luigi</a> written by Python.</p>
+<h2 id="releases">Releases</h2>
+<p>You can find releases in <a href="https://rubygems.org/gems/tumugi">RubyGems.org</a>, and can see changelogs <a href="https://github.com/tumugi/tumugi/blob/master/CHANGELOG.md">here</a>.</p>
               
             </div>
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="recipe1/" class="btn btn-neutral float-right" title="Recipe1 - Getting Started">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
   
 
   <hr/>
@@ -201,6 +168,8 @@ Version 2.0</a>.</p>
       
       
       
+        <span style="margin-left: 15px"><a href="recipe1/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
     </span>
 </div>
 
@@ -209,5 +178,5 @@ Version 2.0</a>.</p>
 
 <!--
 MkDocs version : 0.15.3
-Build Date UTC : 2016-04-23 04:26:54.403034
+Build Date UTC : 2016-05-23 16:19:45.924248
 -->

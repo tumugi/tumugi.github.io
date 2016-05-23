@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Recipe1 - Getting Started - Tumugi</title>
+  
+
+  <link rel="shortcut icon" href="../favicon.ico">
+  
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Recipe1 - Getting Started";
+    var mkdocs_page_input_path = "recipe1.md";
+    var mkdocs_page_url = "/recipe1/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Tumugi</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">Home</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Recipe1 - Getting Started</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#your-first-tumugi-workflow">Your first tumugi workflow</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#prerequisities">Prerequisities</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#installation">Installation</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#define-workflow-by-tumugi-dsl">Define workflow by tumugi DSL</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Tumugi</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Recipe1 - Getting Started</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+          <a href="https://github.com/tumugi/tumugi/" class="icon icon-github"> Edit on GitHub</a>
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="your-first-tumugi-workflow">Your first tumugi workflow</h2>
+<p>This guide explain about how to write a workflow doing following tasks by tumugi.</p>
+<ol>
+<li>Download archived daily access logs from remote servers using <code>wget</code> command</li>
+<li>Count number of rows group by URI and save result into CSV file</li>
+</ol>
+<p>This guide assumes you are using Unix like OS, such as Ubuntu, CentOS, or Mac OS X.</p>
+<h2 id="prerequisities">Prerequisities</h2>
+<ul>
+<li>Ruby 2.1 or later</li>
+<li>Bundler</li>
+<li>graphviz</li>
+</ul>
+<h2 id="installation">Installation</h2>
+<p>Create <code>Gemfile</code> and write following contents:</p>
+<pre><code class="ruby">source 'https://rubygems.org'
+
+gem 'tumugi', '~&gt; 0.4.5'
+gem 'tumugi-plugin-command', '~&gt; 0.1.0'
+</code></pre>
+
+<p>And then execute:</p>
+<pre><code class="bash">$ bundle install
+</code></pre>
+
+<h2 id="define-workflow-by-tumugi-dsl">Define workflow by tumugi DSL</h2>
+<p>You can define workflow above using tumugi DSL.</p>
+<pre><code class="rb">require 'ltsv'
+require 'zip'
+
+####################################################
+# 1. Archived log download
+####################################################
+
+task :download_log, type: :command do
+  param :host, default: 'https://tumugi.github.io'
+  param :log_filename, type: :string
+  param :day, type: :time # &lt;= This value is auto binding from CLI parameter
+
+  param_set :log_filename, -&gt; {
+    &quot;access_#{day.strftime('%Y%m%d')}.log.zip&quot;
+  }
+  param_set :command, -&gt; {
+    url = &quot;#{host}/data/#{log_filename}&quot;
+    &quot;wget #{url} -O #{output.path}&quot;
+  }
+
+  output {
+    target(:local_file, &quot;/tmp/#{log_filename}&quot;)
+  }
+end
+
+####################################################
+# 2. Count rows group by URI
+####################################################
+
+task :count_rows_group_by_uri do
+  requires :download_log
+  output target(:local_file, '/tmp/result.csv')
+  run {
+    counts = {}
+    Zip::File.open(input.path) do |zip_file|
+      zip_file.each do |entry|
+        entry.get_input_stream.each do |line|
+          values = LTSV.parse(line).first
+          counts[values[:uri]] ||= 0
+          counts[values[:uri]] += 1
+        end
+      end
+    end
+    output.open('w') do |o|
+      counts.each do |k, v|
+        o.puts &quot;#{k},#{v}&quot;
+      end
+    end
+  }
+end
+
+####################################################
+# Root Task
+####################################################
+
+task :main do
+  requires :count_rows_group_by_uri
+  run {
+    log File.read(input.path)
+  }
+end
+</code></pre>
+
+<p>Save this code as <code>recipe1.rb</code>, then check this workflow.
+Tumugi provides DAG (Directed Acyclic Graph) of workflow visualize feature.
+<code>show</code> command can visualize DAG (Directed Acyclic Graph) of workflow like:</p>
+<pre><code class="sh">$ bundle exec tumugi show -f recipe1.rb -p day:2016-05-02 -o recipe1.png main
+</code></pre>
+
+<p><img alt="recipe1_dag" src="../../images/recipe1_dag.png" /></p>
+<p>Check visualized workflow and it's OK, you can run it.</p>
+<pre><code class="sh">$ bundle exec tumugi run -f recipe1.rb -p day:2016-05-02 main
+</code></pre>
+
+<p>Then you can get result like this:</p>
+<pre><code class="sh">I, [2016-05-24T01:09:49.243359 #59676]  INFO -- : Parameters: {&quot;day&quot;=&gt;&quot;2016-05-02&quot;}
+I, [2016-05-24T01:09:49.274092 #59676]  INFO -- : start: download_log
+I, [2016-05-24T01:09:49.274243 #59676]  INFO -- : run: download_log
+I, [2016-05-24T01:09:49.274368 #59676]  INFO -- : Execute command: wget https://tumugi.github.io/data/access_20160502.log.zip -O /tmp/access_20160502.log.zip -q
+I, [2016-05-24T01:09:49.285433 #59676]  INFO -- : completed: download_log
+I, [2016-05-24T01:09:49.285554 #59676]  INFO -- : start: count_group_by_uri
+I, [2016-05-24T01:09:49.285668 #59676]  INFO -- : run: count_group_by_uri
+I, [2016-05-24T01:09:50.807095 #59676]  INFO -- : completed: count_group_by_uri
+I, [2016-05-24T01:09:50.807156 #59676]  INFO -- : start: main
+I, [2016-05-24T01:09:50.807206 #59676]  INFO -- : run: main
+I, [2016-05-24T01:09:50.813139 #59676]  INFO -- : /api/v1/messages,7150
+/api/v1/textdata,7373
+/api/v1/people,7377
+
+I, [2016-05-24T01:09:50.813196 #59676]  INFO -- : completed: main
+I, [2016-05-24T01:09:50.815432 #59676]  INFO -- : Result report:
++--------------------+--------------------+-------------------------------------------------------------------------------------------------------+-----------+
+| Task               | Requires           | Parameters                                                                                            | State     |
++--------------------+--------------------+-------------------------------------------------------------------------------------------------------+-----------+
+| main               | count_group_by_uri |                                                                                                       | completed |
+| count_group_by_uri | download_log       |                                                                                                       | completed |
+| download_log       |                    | host=https://tumugi.github.io                                                                         | completed |
+|                    |                    | day=2016-05-02 00:00:00 +0900                                                                         |           |
+|                    |                    | log_filename=access_20160502.log.zip                                                                  |           |
+|                    |                    | command=wget https://tumugi.github.io/data/access_20160502.log.zip -O /tmp/access_20160502.log.zip -q |           |
+|                    |                    | output_file=                                                                                          |           |
++--------------------+--------------------+-------------------------------------------------------------------------------------------------------+-----------+
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/tumugi/tumugi/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+
+</body>
+</html>

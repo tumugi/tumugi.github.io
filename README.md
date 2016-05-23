@@ -33,6 +33,12 @@ $ ./scripts/deploy.sh
 
 ## Special thanks
 
+### Luigi
+
+Tumugi is very inspired by [Luigi](https://github.com/spotify/luigi).
+
+### Logo
+
 Tumugi log is genereted by http://yubin-nenga.jp/hanko/
 
-![logo](https://raw.githubusercontent.com/tumugi/tumugi.github.io/work/docs/images/logo.png)
+![logo](https://raw.githubusercontent.com/tumugi/tumugi.github.io/work/docs/images/logo_s.png)

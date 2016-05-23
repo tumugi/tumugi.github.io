@@ -1,6 +1,7 @@
 site_name: Tumugi
 pages:
   - Home: index.md
+  - Recipe1 - Getting Started: recipe1.md
 theme: readthedocs
 site_url: https://tumugi.github.io/
 repo_url: https://github.com/tumugi/tumugi/

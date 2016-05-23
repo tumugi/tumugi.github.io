@@ -1,78 +1,21 @@
-# Tumugi
+![logo](/images/logo_s.png)
+
+## What is tumugi ?
 
 Tumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.
 
-## Installation
+Tumugi has following features:
 
-**Tumugi only support Ruby 2.0+**
+- Define workflows using DSL and ruby code
+- Scheduling task from the given dependencies
+- Parallel task execution
+- Error handling and retry
+- Small core and enhance menbe by plugins released on RubyGems.org
 
-Add this line to your application's Gemfile:
+<iframe src="https://docs.google.com/presentation/d/1KnUcKZgLNKXoi-4UFMNQHGup8Tb4_3XBhO4Ov_ZXMOY/embed?start=false&loop=false&delayms=5000&slide=5" frameborder="0" width="480" height="389" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
 
-```ruby
-gem 'tumugi'
-```
+Tumugi is very inspired by [Luigi](https://github.com/spotify/luigi) written by Python.
 
-And then execute:
+## Releases
 
-```bash
-$ bundle
-```
-
-Or install it yourself as:
-
-```bash
-$ gem install tumugi
-```
-
-## Usage
-
-**TODO: Put DAG here.**
-
-You can define workflow above as ruby code:
-
-```rb
-task :task1 do
-  requires [:task2, :task3]
-  run { puts 'task1#run' }
-end
-
-task :task2 do
-  requires [:task4]
-  run { puts 'task2#run' }
-end
-
-task :task3 do
-  requires [:task4]
-  run { puts 'task3#run' }
-end
-
-task :task4 do
-  # You can use do ... end style
-  run do
-    puts 'task4#run'
-    sleep 3
-  end
-end
-```
-
-Save these code into `workflow.rb`,
-then run this script by `tumugi` command like this:
-
-```bash
-$ tumugi workflow.rb task1
-```
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/tumugi/tumugi
-
-## License
-
-The gem is available as open source under the terms of the [Apache License
-Version 2.0](http://www.apache.org/licenses/).
+You can find releases in [RubyGems.org](https://rubygems.org/gems/tumugi), and can see changelogs [here](https://github.com/tumugi/tumugi/blob/master/CHANGELOG.md).

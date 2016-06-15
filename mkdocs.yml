@@ -1,4 +1,4 @@
-site_name: Tumugi
+site_name: tumugi
 pages:
   - Home: index.md
   - Recipe1 - Getting Started: recipe1.md

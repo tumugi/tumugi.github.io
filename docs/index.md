@@ -1,4 +1,4 @@
-![logo](/images/logo_s.png)
+![logo](/images/logo.png)
 
 ## What is tumugi ?
 

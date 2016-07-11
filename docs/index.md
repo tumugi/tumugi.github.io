@@ -16,6 +16,10 @@ Tumugi has following features:
 
 Tumugi is very inspired by [Luigi](https://github.com/spotify/luigi) written by Python.
 
+## Table of Contents
+
+- [Getting Started](getting_started)
+
 ## Releases
 
 You can find releases in [RubyGems.org](https://rubygems.org/gems/tumugi), and can see changelogs [here](https://github.com/tumugi/tumugi/blob/master/CHANGELOG.md).

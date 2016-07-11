@@ -1,7 +1,8 @@
 site_name: tumugi
 pages:
   - Home: index.md
-  - Recipe1 - Getting Started: recipe1.md
+  - Getting Started: getting_started.md
+  - Recipe1 - Download file and save it as local file: recipe1.md
 theme: readthedocs
 site_url: https://tumugi.github.io/
 repo_url: https://github.com/tumugi/tumugi/

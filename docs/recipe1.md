@@ -1,4 +1,4 @@
-## Your first tumugi workflow
+## Recipe1: Download file and save it as local file
 
 This guide explain about how to write a workflow doing following tasks by tumugi.
 
@@ -9,7 +9,7 @@ This guide assumes you are using Unix like OS, such as Ubuntu, CentOS, or Mac OS
 
 ## Prerequisities
 
-- Ruby 2.1 or later
+- Ruby >= 2.1
 - Bundler
 - graphviz
 
@@ -20,13 +20,16 @@ Create `Gemfile` and write following contents:
 ```ruby
 source 'https://rubygems.org'
 
-gem 'tumugi', '~> 0.4.5'
-gem 'tumugi-plugin-command', '~> 0.1.0'
+gem 'tumugi', '~> 0.6.1'
+gem 'tumugi-plugin-command', '~> 0.3.0'
+
+gem 'ltsv'
+gem 'rubyzip'
 ```
 
 And then execute:
 
-```bash
+```sh
 $ bundle install
 ```
 
@@ -45,18 +48,18 @@ require 'zip'
 task :download_log, type: :command do
   param :host, default: 'https://tumugi.github.io'
   param :log_filename, type: :string
-  param :day, type: :time # <= This value is auto binding from CLI parameter
+  param :day, auto_bind: true, type: :time # <= This value is auto binding from CLI parameter
 
-  param_set :log_filename, -> {
+  log_filename {
     "access_#{day.strftime('%Y%m%d')}.log.zip"
   }
-  param_set :command, -> {
+  command {
     url = "#{host}/data/#{log_filename}"
     "wget #{url} -O #{output.path}"
   }
 
   output {
-    target(:local_file, "/tmp/#{log_filename}")
+    target(:local_file, "tmp/#{log_filename}")
   }
 end
 
@@ -106,42 +109,46 @@ Tumugi provides DAG (Directed Acyclic Graph) of workflow visualize feature.
 $ bundle exec tumugi show -f recipe1.rb -p day:2016-05-02 -o recipe1.png main
 ```
 
-![recipe1_dag](../images/recipe1_dag.png)
+![recipe1_dag](./images/recipe1_dag.png)
 
 Check visualized workflow and it's OK, you can run it.
 
 ```sh
+$ mkdir tmp
 $ bundle exec tumugi run -f recipe1.rb -p day:2016-05-02 main
 ```
 
 Then you can get result like this:
 
 ```sh
-I, [2016-05-24T01:09:49.243359 #59676]  INFO -- : Parameters: {"day"=>"2016-05-02"}
-I, [2016-05-24T01:09:49.274092 #59676]  INFO -- : start: download_log
-I, [2016-05-24T01:09:49.274243 #59676]  INFO -- : run: download_log
-I, [2016-05-24T01:09:49.274368 #59676]  INFO -- : Execute command: wget https://tumugi.github.io/data/access_20160502.log.zip -O /tmp/access_20160502.log.zip -q
-I, [2016-05-24T01:09:49.285433 #59676]  INFO -- : completed: download_log
-I, [2016-05-24T01:09:49.285554 #59676]  INFO -- : start: count_group_by_uri
-I, [2016-05-24T01:09:49.285668 #59676]  INFO -- : run: count_group_by_uri
-I, [2016-05-24T01:09:50.807095 #59676]  INFO -- : completed: count_group_by_uri
-I, [2016-05-24T01:09:50.807156 #59676]  INFO -- : start: main
-I, [2016-05-24T01:09:50.807206 #59676]  INFO -- : run: main
-I, [2016-05-24T01:09:50.813139 #59676]  INFO -- : /api/v1/messages,7150
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] Parameters: {"day"=>"2016-05-02"}
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] Load workflow from recipe1.rb
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] start workflow: 45f23a9a-eb61-4516-ac9c-512bfc21dea7
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] skipped: download_log is already completed, thread: 70195091864060
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] skipped: count_rows_group_by_uri is already completed, thread: 70195091864060
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] start: main, thread: 70195092510140
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] /api/v1/messages,7150
 /api/v1/textdata,7373
 /api/v1/people,7377
 
-I, [2016-05-24T01:09:50.813196 #59676]  INFO -- : completed: main
-I, [2016-05-24T01:09:50.815432 #59676]  INFO -- : Result report:
-+--------------------+--------------------+-------------------------------------------------------------------------------------------------------+-----------+
-| Task               | Requires           | Parameters                                                                                            | State     |
-+--------------------+--------------------+-------------------------------------------------------------------------------------------------------+-----------+
-| main               | count_group_by_uri |                                                                                                       | completed |
-| count_group_by_uri | download_log       |                                                                                                       | completed |
-| download_log       |                    | host=https://tumugi.github.io                                                                         | completed |
-|                    |                    | day=2016-05-02 00:00:00 +0900                                                                         |           |
-|                    |                    | log_filename=access_20160502.log.zip                                                                  |           |
-|                    |                    | command=wget https://tumugi.github.io/data/access_20160502.log.zip -O /tmp/access_20160502.log.zip -q |           |
-|                    |                    | output_file=                                                                                          |           |
-+--------------------+--------------------+-------------------------------------------------------------------------------------------------------+-----------+
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] completed: main, thread: 70195092510140
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] end workflow: 45f23a9a-eb61-4516-ac9c-512bfc21dea7
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] Result report:
++-------------------------+-------------------------+--------------------------------------+-----------+
+|                                           Workflow Result                                            |
++-------------------------+-------------------------+--------------------------------------+-----------+
+| Task                    | Requires                | Parameters                           | State     |
++-------------------------+-------------------------+--------------------------------------+-----------+
+| download_log            |                         | host=https://tumugi.github.io        | skipped   |
+|                         |                         | log_filename=access_20160502.log.zip |           |
+|                         |                         | day=2016-05-02 00:00:00 +0900        |           |
+|                         |                         | command=wget https://tumugi.githu... |           |
+|                         |                         | output_file=                         |           |
+|                         |                         | env={}                               |           |
++-------------------------+-------------------------+--------------------------------------+-----------+
+| count_rows_group_by_uri | download_log            |                                      | skipped   |
++-------------------------+-------------------------+--------------------------------------+-----------+
+| main                    | count_rows_group_by_uri |                                      | completed |
++-------------------------+-------------------------+--------------------------------------+-----------+
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] status: success, command: run, task: main, options: {"config"=>"tumugi_config.rb", "quiet"=>false, "verbose"=>false, "log_format"=>"text", "file"=>"recipe1.rb", "params"=>{"day"=>"2016-05-02"}}
 ```

@@ -1,5 +1,3 @@
-## Getting Started
-
 ## Prerequisities
 
 - Ruby >= 2.1

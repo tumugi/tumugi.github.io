@@ -3,6 +3,7 @@ pages:
   - Home: index.md
   - Getting Started: getting_started.md
   - Recipe1 - Download file and save it as local file: recipe1.md
+  - List of tumugi Plugins: plugins.md
 theme: readthedocs
 site_url: https://tumugi.github.io/
 repo_url: https://github.com/tumugi/tumugi/

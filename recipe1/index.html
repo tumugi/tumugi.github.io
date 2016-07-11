@@ -8,7 +8,7 @@
   
   
   
-  <title>Recipe1 - Getting Started - tumugi</title>
+  <title>Recipe1 - Download file and save it as local file - tumugi</title>
   
 
   <link rel="shortcut icon" href="../favicon.ico">
@@ -24,7 +24,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Recipe1 - Getting Started";
+    var mkdocs_page_name = "Recipe1 - Download file and save it as local file";
     var mkdocs_page_input_path = "recipe1.md";
     var mkdocs_page_url = "/recipe1/";
   </script>
@@ -73,12 +73,19 @@
 <li>
           
             <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../getting_started/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
     <li class="toctree-l1 current">
-        <a class="current" href="./">Recipe1 - Getting Started</a>
+        <a class="current" href="./">Recipe1 - Download file and save it as local file</a>
         
             <ul>
             
-                <li class="toctree-l3"><a href="#your-first-tumugi-workflow">Your first tumugi workflow</a></li>
+                <li class="toctree-l3"><a href="#recipe1-download-file-and-save-it-as-local-file">Recipe1: Download file and save it as local file</a></li>
                 
             
                 <li class="toctree-l3"><a href="#prerequisities">Prerequisities</a></li>
@@ -91,6 +98,13 @@
                 
             
             </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../plugins/">List of tumugi Plugins</a>
         
     </li>
 <li>
@@ -117,7 +131,7 @@
     
       
     
-    <li>Recipe1 - Getting Started</li>
+    <li>Recipe1 - Download file and save it as local file</li>
     <li class="wy-breadcrumbs-aside">
       
         
@@ -131,7 +145,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="your-first-tumugi-workflow">Your first tumugi workflow</h2>
+                <h2 id="recipe1-download-file-and-save-it-as-local-file">Recipe1: Download file and save it as local file</h2>
 <p>This guide explain about how to write a workflow doing following tasks by tumugi.</p>
 <ol>
 <li>Download archived daily access logs from remote servers using <code>wget</code> command</li>
@@ -140,7 +154,7 @@
 <p>This guide assumes you are using Unix like OS, such as Ubuntu, CentOS, or Mac OS X.</p>
 <h2 id="prerequisities">Prerequisities</h2>
 <ul>
-<li>Ruby 2.1 or later</li>
+<li>Ruby &gt;= 2.1</li>
 <li>Bundler</li>
 <li>graphviz</li>
 </ul>
@@ -148,12 +162,15 @@
 <p>Create <code>Gemfile</code> and write following contents:</p>
 <pre><code class="ruby">source 'https://rubygems.org'
 
-gem 'tumugi', '~&gt; 0.4.5'
-gem 'tumugi-plugin-command', '~&gt; 0.1.0'
+gem 'tumugi', '~&gt; 0.6.1'
+gem 'tumugi-plugin-command', '~&gt; 0.3.0'
+
+gem 'ltsv'
+gem 'rubyzip'
 </code></pre>
 
 <p>And then execute:</p>
-<pre><code class="bash">$ bundle install
+<pre><code class="sh">$ bundle install
 </code></pre>
 
 <h2 id="define-workflow-by-tumugi-dsl">Define workflow by tumugi DSL</h2>
@@ -168,18 +185,18 @@ require 'zip'
 task :download_log, type: :command do
   param :host, default: 'https://tumugi.github.io'
   param :log_filename, type: :string
-  param :day, type: :time # &lt;= This value is auto binding from CLI parameter
+  param :day, auto_bind: true, type: :time # &lt;= This value is auto binding from CLI parameter
 
-  param_set :log_filename, -&gt; {
+  log_filename {
     &quot;access_#{day.strftime('%Y%m%d')}.log.zip&quot;
   }
-  param_set :command, -&gt; {
+  command {
     url = &quot;#{host}/data/#{log_filename}&quot;
     &quot;wget #{url} -O #{output.path}&quot;
   }
 
   output {
-    target(:local_file, &quot;/tmp/#{log_filename}&quot;)
+    target(:local_file, &quot;tmp/#{log_filename}&quot;)
   }
 end
 
@@ -227,39 +244,43 @@ Tumugi provides DAG (Directed Acyclic Graph) of workflow visualize feature.
 <pre><code class="sh">$ bundle exec tumugi show -f recipe1.rb -p day:2016-05-02 -o recipe1.png main
 </code></pre>
 
-<p><img alt="recipe1_dag" src="../../images/recipe1_dag.png" /></p>
+<p><img alt="recipe1_dag" src="../images/recipe1_dag.png" /></p>
 <p>Check visualized workflow and it's OK, you can run it.</p>
-<pre><code class="sh">$ bundle exec tumugi run -f recipe1.rb -p day:2016-05-02 main
+<pre><code class="sh">$ mkdir tmp
+$ bundle exec tumugi run -f recipe1.rb -p day:2016-05-02 main
 </code></pre>
 
 <p>Then you can get result like this:</p>
-<pre><code class="sh">I, [2016-05-24T01:09:49.243359 #59676]  INFO -- : Parameters: {&quot;day&quot;=&gt;&quot;2016-05-02&quot;}
-I, [2016-05-24T01:09:49.274092 #59676]  INFO -- : start: download_log
-I, [2016-05-24T01:09:49.274243 #59676]  INFO -- : run: download_log
-I, [2016-05-24T01:09:49.274368 #59676]  INFO -- : Execute command: wget https://tumugi.github.io/data/access_20160502.log.zip -O /tmp/access_20160502.log.zip -q
-I, [2016-05-24T01:09:49.285433 #59676]  INFO -- : completed: download_log
-I, [2016-05-24T01:09:49.285554 #59676]  INFO -- : start: count_group_by_uri
-I, [2016-05-24T01:09:49.285668 #59676]  INFO -- : run: count_group_by_uri
-I, [2016-05-24T01:09:50.807095 #59676]  INFO -- : completed: count_group_by_uri
-I, [2016-05-24T01:09:50.807156 #59676]  INFO -- : start: main
-I, [2016-05-24T01:09:50.807206 #59676]  INFO -- : run: main
-I, [2016-05-24T01:09:50.813139 #59676]  INFO -- : /api/v1/messages,7150
+<pre><code class="sh">2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] Parameters: {&quot;day&quot;=&gt;&quot;2016-05-02&quot;}
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] Load workflow from recipe1.rb
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] start workflow: 45f23a9a-eb61-4516-ac9c-512bfc21dea7
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] skipped: download_log is already completed, thread: 70195091864060
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] skipped: count_rows_group_by_uri is already completed, thread: 70195091864060
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] start: main, thread: 70195092510140
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] /api/v1/messages,7150
 /api/v1/textdata,7373
 /api/v1/people,7377
 
-I, [2016-05-24T01:09:50.813196 #59676]  INFO -- : completed: main
-I, [2016-05-24T01:09:50.815432 #59676]  INFO -- : Result report:
-+--------------------+--------------------+-------------------------------------------------------------------------------------------------------+-----------+
-| Task               | Requires           | Parameters                                                                                            | State     |
-+--------------------+--------------------+-------------------------------------------------------------------------------------------------------+-----------+
-| main               | count_group_by_uri |                                                                                                       | completed |
-| count_group_by_uri | download_log       |                                                                                                       | completed |
-| download_log       |                    | host=https://tumugi.github.io                                                                         | completed |
-|                    |                    | day=2016-05-02 00:00:00 +0900                                                                         |           |
-|                    |                    | log_filename=access_20160502.log.zip                                                                  |           |
-|                    |                    | command=wget https://tumugi.github.io/data/access_20160502.log.zip -O /tmp/access_20160502.log.zip -q |           |
-|                    |                    | output_file=                                                                                          |           |
-+--------------------+--------------------+-------------------------------------------------------------------------------------------------------+-----------+
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] completed: main, thread: 70195092510140
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] end workflow: 45f23a9a-eb61-4516-ac9c-512bfc21dea7
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] Result report:
++-------------------------+-------------------------+--------------------------------------+-----------+
+|                                           Workflow Result                                            |
++-------------------------+-------------------------+--------------------------------------+-----------+
+| Task                    | Requires                | Parameters                           | State     |
++-------------------------+-------------------------+--------------------------------------+-----------+
+| download_log            |                         | host=https://tumugi.github.io        | skipped   |
+|                         |                         | log_filename=access_20160502.log.zip |           |
+|                         |                         | day=2016-05-02 00:00:00 +0900        |           |
+|                         |                         | command=wget https://tumugi.githu... |           |
+|                         |                         | output_file=                         |           |
+|                         |                         | env={}                               |           |
++-------------------------+-------------------------+--------------------------------------+-----------+
+| count_rows_group_by_uri | download_log            |                                      | skipped   |
++-------------------------+-------------------------+--------------------------------------+-----------+
+| main                    | count_rows_group_by_uri |                                      | completed |
++-------------------------+-------------------------+--------------------------------------+-----------+
+2016-07-11 15:28:39 +0900 INFO [45f23a9a-eb61-4516-ac9c-512bfc21dea7] status: success, command: run, task: main, options: {&quot;config&quot;=&gt;&quot;tumugi_config.rb&quot;, &quot;quiet&quot;=&gt;false, &quot;verbose&quot;=&gt;false, &quot;log_format&quot;=&gt;&quot;text&quot;, &quot;file&quot;=&gt;&quot;recipe1.rb&quot;, &quot;params&quot;=&gt;{&quot;day&quot;=&gt;&quot;2016-05-02&quot;}}
 </code></pre>
               
             </div>
@@ -268,8 +289,10 @@ I, [2016-05-24T01:09:50.815432 #59676]  INFO -- : Result report:
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="../plugins/" class="btn btn-neutral float-right" title="List of tumugi Plugins">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+        <a href="../getting_started/" class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -297,8 +320,10 @@ I, [2016-05-24T01:09:50.815432 #59676]  INFO -- : Result report:
           <a href="https://github.com/tumugi/tumugi/" class="icon icon-github" style="float: left; color: #fcfcfc"> GitHub</a>
       
       
-        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../getting_started/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../plugins/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

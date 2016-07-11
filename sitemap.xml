@@ -4,7 +4,15 @@
     
     <url>
      <loc>https://tumugi.github.io//</loc>
-     <lastmod>2016-06-16</lastmod>
+     <lastmod>2016-07-11</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://tumugi.github.io//getting_started/</loc>
+     <lastmod>2016-07-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -12,7 +20,15 @@
     
     <url>
      <loc>https://tumugi.github.io//recipe1/</loc>
-     <lastmod>2016-06-16</lastmod>
+     <lastmod>2016-07-11</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>https://tumugi.github.io//plugins/</loc>
+     <lastmod>2016-07-11</lastmod>
      <changefreq>daily</changefreq>
     </url>
     

@@ -6,3 +6,5 @@
 | [bigquery](https://github.com/tumugi/tumugi-plugin-bigquery)                         | [hakobera](https://github.com/orgs/tumugi/people/hakobera) | tumugi plugin for Google BigQuery      |
 | [google_drive](https://github.com/tumugi/tumugi-plugin-google_drive)                 | [hakobera](https://github.com/orgs/tumugi/people/hakobera) | tumugi plugin for Google Drive         |
 | [google_cloud_storage](https://github.com/tumugi/tumugi-plugin-google_cloud_storage) | [hakobera](https://github.com/orgs/tumugi/people/hakobera) | tumugi plugin for Google Cloud Storage |
+
+ref: https://rubygems.org/search?utf8=%E2%9C%93&query=tumugi-plugin

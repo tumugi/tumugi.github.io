@@ -2,22 +2,22 @@
     "docs": [
         {
             "location": "/", 
-            "text": "What is tumugi ?\n\n\nTumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.\n\n\nTumugi has following features:\n\n\n\n\nDefine workflows using DSL and ruby code\n\n\nScheduling task from the given dependencies\n\n\nParallel task execution\n\n\nError handling and retry\n\n\nSmall core and enhance menbe by plugins released on RubyGems.org\n\n\n\n\n\n\n\nTumugi is very inspired by \nLuigi\n written by Python.\n\n\nTable of Contents\n\n\n\n\nGetting Started\n\n\n\n\nReleases\n\n\nYou can find releases in \nRubyGems.org\n, and can see changelogs \nhere\n.", 
+            "text": "What is tumugi ?\n\n\nTumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.\n\n\ntumugi has following features:\n\n\n\n\nDefine workflow using internal DSL, it means just ruby code\n\n\nScheduling task from the given dependencies\n\n\nParallel task execution on a local machine\n\n\nError handling and retry\n\n\nSmall core and enhance menbe by plugins released on RubyGems.org\n\n\n\n\ntumugi has not following features:\n\n\n\n\nDistribution processing, it run in a local machine\n\n\nScheduler, so you need to run tumugi cron, jenkins and so on.\n\n\n\n\nTable of Contents\n\n\n\n\nGetting Started\n\n\nArchitecture\n\n\nWorkflow Examples\n\n\nRecipe1: Download file and save it as local file\n\n\n\n\n\n\nList of tumugi plugins\n\n\n\n\nReleases\n\n\nYou can find releases in \nRubyGems.org\n and can see changelogs at \nHERE\n.\n\n\nLatest version is \nv0.6.1", 
             "title": "Home"
         }, 
         {
             "location": "/#what-is-tumugi", 
-            "text": "Tumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.  Tumugi has following features:   Define workflows using DSL and ruby code  Scheduling task from the given dependencies  Parallel task execution  Error handling and retry  Small core and enhance menbe by plugins released on RubyGems.org    Tumugi is very inspired by  Luigi  written by Python.", 
+            "text": "Tumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.  tumugi has following features:   Define workflow using internal DSL, it means just ruby code  Scheduling task from the given dependencies  Parallel task execution on a local machine  Error handling and retry  Small core and enhance menbe by plugins released on RubyGems.org   tumugi has not following features:   Distribution processing, it run in a local machine  Scheduler, so you need to run tumugi cron, jenkins and so on.", 
             "title": "What is tumugi ?"
         }, 
         {
             "location": "/#table-of-contents", 
-            "text": "Getting Started", 
+            "text": "Getting Started  Architecture  Workflow Examples  Recipe1: Download file and save it as local file    List of tumugi plugins", 
             "title": "Table of Contents"
         }, 
         {
             "location": "/#releases", 
-            "text": "You can find releases in  RubyGems.org , and can see changelogs  here .", 
+            "text": "You can find releases in  RubyGems.org  and can see changelogs at  HERE .  Latest version is  v0.6.1", 
             "title": "Releases"
         }, 
         {
@@ -39,6 +39,36 @@
             "location": "/getting_started/#define-workflow-by-tumugi-dsl", 
             "text": "You can define workflow above as ruby code:  task :task1 do\n  requires [:task2, :task3]\n  run { puts 'task1#run' }\nend\n\ntask :task2 do\n  requires :task4\n  run { puts 'task2#run' }\nend\n\ntask :task3 do\n  requires :task4\n  run { puts 'task3#run' }\nend\n\ntask :task4 do\n  run {\n    puts 'task4#run'\n    sleep 3\n  }\nend  Save these code into  workflow.rb ,\nthen run this script by  tumugi  command like this:  $ bundle exec tumugi run -f workflow.rb task1\n2016-07-11 15:04:57 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] Load workflow from getting_started.rb\n2016-07-11 15:04:57 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] start workflow: bc53bb58-03c4-467e-9cec-f658729b3d99\n2016-07-11 15:04:57 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] start: task4, thread: 70254131630100\ntask4#run\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] completed: task4, thread: 70254131630100\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] start: task2, thread: 70254131630100\ntask2#run\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] completed: task2, thread: 70254131630100\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] start: task3, thread: 70254131630100\ntask3#run\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] completed: task3, thread: 70254131630100\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] start: task1, thread: 70254131630100\ntask1#run\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] completed: task1, thread: 70254131630100\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] end workflow: bc53bb58-03c4-467e-9cec-f658729b3d99\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] Result report:\n+-------+----------+------------+-----------+\n|              Workflow Result              |\n+-------+----------+------------+-----------+\n| Task  | Requires | Parameters | State     |\n+-------+----------+------------+-----------+\n| task4 |          |            | completed |\n+-------+----------+------------+-----------+\n| task2 | task4    |            | completed |\n+-------+----------+------------+-----------+\n| task3 | task4    |            | completed |\n+-------+----------+------------+-----------+\n| task1 | task2    |            | completed |\n|       | task3    |            |           |\n+-------+----------+------------+-----------+\n2016-07-11 15:05:00 +0900 INFO [bc53bb58-03c4-467e-9cec-f658729b3d99] status: success, command: run, task: task1, options: { config = tumugi_config.rb ,  quiet = false,  verbose = false,  log_format = text ,  file = getting_started.rb }", 
             "title": "Define workflow by tumugi DSL"
+        }, 
+        {
+            "location": "/architecture/", 
+            "text": "Overview\n\n\nTumugi is inspired by \nLuigi\n written by Python, and our goal is create a better alternative of Rake. It can describe and run workflow written by ruby code.\n\n\n\n\n\n\n\nDependency resolution and parallel execution\n\n\nTumugi can resolve dependencies of tasks in a workflow and automatically run task in parallel if dependency task is already completed.\n\n\n\n\nIf \nFirst Task\n is completed, \nSecond Task\n and \nAnother Second Task\n run in parallel. \nLast Task\n wait until \nSecond Task\n and \nAnother Second Task\n completed.\n\n\nBuilding a workflow as code\n\n\nUsing tumugi, workflow file is just a ruby code like below. So you can use any editors and rubygems as you like. Workflow as code is also good for version control, code review.\n\n\ntask :last_task do\n  requires [:second_task, :another_second_task]\nend\n\ntask :second_task do\n  requires :first_task\nend\n\ntask :another_second_task do\n  requires :first_task\nend\n\ntask :first_task do\nend\n\n\n\n\nTarget and Parameters\n\n\n\n\nTarget\n is input and onput of \nTask\n, and is a ruby class which has at least \nexist?\n method.\n\n\n\n\nParameter\n is another input of \nTask\n. \nTask#run\n method can refer these parameters and user can set parameter value from CLI options.\n\n\nPlugin based architecture\n\n\nTumugi is based on plugin architecutre. All \nTask\n and \nTargets\n are made by plugin. Currently you can create custom \nTask\n and \nTarget\n by plugin or reuse existing \nplugins\n.", 
+            "title": "Architecture"
+        }, 
+        {
+            "location": "/architecture/#overview", 
+            "text": "Tumugi is inspired by  Luigi  written by Python, and our goal is create a better alternative of Rake. It can describe and run workflow written by ruby code.", 
+            "title": "Overview"
+        }, 
+        {
+            "location": "/architecture/#dependency-resolution-and-parallel-execution", 
+            "text": "Tumugi can resolve dependencies of tasks in a workflow and automatically run task in parallel if dependency task is already completed.   If  First Task  is completed,  Second Task  and  Another Second Task  run in parallel.  Last Task  wait until  Second Task  and  Another Second Task  completed.", 
+            "title": "Dependency resolution and parallel execution"
+        }, 
+        {
+            "location": "/architecture/#building-a-workflow-as-code", 
+            "text": "Using tumugi, workflow file is just a ruby code like below. So you can use any editors and rubygems as you like. Workflow as code is also good for version control, code review.  task :last_task do\n  requires [:second_task, :another_second_task]\nend\n\ntask :second_task do\n  requires :first_task\nend\n\ntask :another_second_task do\n  requires :first_task\nend\n\ntask :first_task do\nend", 
+            "title": "Building a workflow as code"
+        }, 
+        {
+            "location": "/architecture/#target-and-parameters", 
+            "text": "Target  is input and onput of  Task , and is a ruby class which has at least  exist?  method.   Parameter  is another input of  Task .  Task#run  method can refer these parameters and user can set parameter value from CLI options.", 
+            "title": "Target and Parameters"
+        }, 
+        {
+            "location": "/architecture/#plugin-based-architecture", 
+            "text": "Tumugi is based on plugin architecutre. All  Task  and  Targets  are made by plugin. Currently you can create custom  Task  and  Target  by plugin or reuse existing  plugins .", 
+            "title": "Plugin based architecture"
         }, 
         {
             "location": "/recipe1/", 

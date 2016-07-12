@@ -2,6 +2,7 @@ site_name: tumugi
 pages:
   - Home: index.md
   - Getting Started: getting_started.md
+  - Architecture: architecture.md
   - Recipe1 - Download file and save it as local file: recipe1.md
   - List of tumugi Plugins: plugins.md
 theme: readthedocs

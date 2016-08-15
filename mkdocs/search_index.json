@@ -97,12 +97,12 @@
         }, 
         {
             "location": "/plugins/", 
-            "text": "List of tumugi plugins\n\n\n\n\n\n\n\n\nName\n\n\nAuthor\n\n\nAbout\n\n\n\n\n\n\n\n\n\n\ncommand\n\n\nhakobera\n\n\ntumugi plugin to execute a command\n\n\n\n\n\n\nbigquery\n\n\nhakobera\n\n\ntumugi plugin for Google BigQuery\n\n\n\n\n\n\ngoogle_drive\n\n\nhakobera\n\n\ntumugi plugin for Google Drive\n\n\n\n\n\n\ngoogle_cloud_storage\n\n\nhakobera\n\n\ntumugi plugin for Google Cloud Storage\n\n\n\n\n\n\n\n\nYou can also find all plugin from \nhttps://rubygems.org/search?query=tumugi-plugin", 
+            "text": "List of tumugi plugins\n\n\n\n\n\n\n\n\nName\n\n\nAuthor\n\n\nAbout\n\n\n\n\n\n\n\n\n\n\ncommand\n\n\nhakobera\n\n\ntumugi plugin to execute a command\n\n\n\n\n\n\nbigquery\n\n\nhakobera\n\n\ntumugi plugin for Google BigQuery\n\n\n\n\n\n\ngoogle_drive\n\n\nhakobera\n\n\ntumugi plugin for Google Drive\n\n\n\n\n\n\ngoogle_cloud_storage\n\n\nhakobera\n\n\ntumugi plugin for Google Cloud Storage\n\n\n\n\n\n\nwebhook\n\n\nhakobera\n\n\ntumugi plugin for WebHook\n\n\n\n\n\n\n\n\nYou can also find all plugin from \nhttps://rubygems.org/search?query=tumugi-plugin", 
             "title": "List of tumugi Plugins"
         }, 
         {
             "location": "/plugins/#list-of-tumugi-plugins", 
-            "text": "Name  Author  About      command  hakobera  tumugi plugin to execute a command    bigquery  hakobera  tumugi plugin for Google BigQuery    google_drive  hakobera  tumugi plugin for Google Drive    google_cloud_storage  hakobera  tumugi plugin for Google Cloud Storage     You can also find all plugin from  https://rubygems.org/search?query=tumugi-plugin", 
+            "text": "Name  Author  About      command  hakobera  tumugi plugin to execute a command    bigquery  hakobera  tumugi plugin for Google BigQuery    google_drive  hakobera  tumugi plugin for Google Drive    google_cloud_storage  hakobera  tumugi plugin for Google Cloud Storage    webhook  hakobera  tumugi plugin for WebHook     You can also find all plugin from  https://rubygems.org/search?query=tumugi-plugin", 
             "title": "List of tumugi plugins"
         }
     ]

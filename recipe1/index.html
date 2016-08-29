@@ -111,6 +111,13 @@
           
             <li>
     <li class="toctree-l1 ">
+        <a class="" href="../recipe2/">Recipe2 - Export BigQuery query result to Google Drive and notify URL to Slack</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
         <a class="" href="../plugins/">List of tumugi Plugins</a>
         
     </li>
@@ -169,7 +176,7 @@
 <p>Create <code>Gemfile</code> and write following contents:</p>
 <pre><code class="ruby">source 'https://rubygems.org'
 
-gem 'tumugi', '~&gt; 0.6.1'
+gem 'tumugi', '~&gt; 0.6.3'
 gem 'tumugi-plugin-command', '~&gt; 0.3.0'
 
 gem 'ltsv'
@@ -192,7 +199,7 @@ require 'zip'
 task :download_log, type: :command do
   param :host, default: 'https://tumugi.github.io'
   param :log_filename, type: :string
-  param :day, auto_bind: true, type: :time # &lt;= This value is auto binding from CLI parameter
+  param :day, auto_bind: true, type: :time, required: true # &lt;= This value is auto binding from CLI parameter
 
   log_filename {
     &quot;access_#{day.strftime('%Y%m%d')}.log.zip&quot;
@@ -296,7 +303,7 @@ $ bundle exec tumugi run -f recipe1.rb -p day:2016-05-02 main
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../plugins/" class="btn btn-neutral float-right" title="List of tumugi Plugins">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../recipe2/" class="btn btn-neutral float-right" title="Recipe2 - Export BigQuery query result to Google Drive and notify URL to Slack">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../architecture/" class="btn btn-neutral" title="Architecture"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -330,7 +337,7 @@ $ bundle exec tumugi run -f recipe1.rb -p day:2016-05-02 main
         <span><a href="../architecture/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../plugins/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../recipe2/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

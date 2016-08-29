@@ -20,7 +20,7 @@ Create `Gemfile` and write following contents:
 ```ruby
 source 'https://rubygems.org'
 
-gem 'tumugi', '~> 0.6.1'
+gem 'tumugi', '~> 0.6.3'
 gem 'tumugi-plugin-command', '~> 0.3.0'
 
 gem 'ltsv'
@@ -48,7 +48,7 @@ require 'zip'
 task :download_log, type: :command do
   param :host, default: 'https://tumugi.github.io'
   param :log_filename, type: :string
-  param :day, auto_bind: true, type: :time # <= This value is auto binding from CLI parameter
+  param :day, auto_bind: true, type: :time, required: true # <= This value is auto binding from CLI parameter
 
   log_filename {
     "access_#{day.strftime('%Y%m%d')}.log.zip"

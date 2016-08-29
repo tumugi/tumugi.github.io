@@ -4,6 +4,7 @@ pages:
   - Getting Started: getting_started.md
   - Architecture: architecture.md
   - Recipe1 - Download file and save it as local file: recipe1.md
+  - Recipe2 - Export BigQuery query result to Google Drive and notify URL to Slack: recipe2.md
   - List of tumugi Plugins: plugins.md
 theme: readthedocs
 site_url: https://tumugi.github.io/

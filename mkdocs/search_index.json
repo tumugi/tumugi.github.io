@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "What is tumugi ?\n\n\nTumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.\n\n\ntumugi has following features:\n\n\n\n\nDefine workflow using internal DSL, it means just ruby code\n\n\nScheduling task from the given dependencies\n\n\nParallel task execution on a local machine\n\n\nError handling and retry\n\n\nSmall core and enhance menbe by plugins released on RubyGems.org\n\n\n\n\ntumugi has not following features:\n\n\n\n\nDistribution processing, it run in a local machine\n\n\nScheduler, so you need to run tumugi cron, jenkins and so on.\n\n\n\n\nTable of Contents\n\n\n\n\nGetting Started\n\n\nArchitecture\n\n\nWorkflow Examples\n\n\nRecipe1: Download file and save it as local file\n\n\n\n\n\n\nList of tumugi plugins\n\n\n\n\nReleases\n\n\nYou can find releases in \nRubyGems.org\n and can see changelogs at \nHERE\n.\n\n\nLatest version is \nv0.6.1", 
+            "text": "What is tumugi ?\n\n\nTumugi is a ruby library to build, run and manage complex workflows. Tumugi enables you to define workflows as a ruby code.\n\n\ntumugi has following features:\n\n\n\n\nDefine workflow using internal DSL, it means just ruby code\n\n\nScheduling task from the given dependencies\n\n\nParallel task execution on a local machine\n\n\nError handling and retry\n\n\nSmall core and enhance menbe by plugins released on RubyGems.org\n\n\n\n\ntumugi has not following features:\n\n\n\n\nDistribution processing, it run in a local machine\n\n\nScheduler, so you need to run tumugi cron, jenkins and so on.\n\n\n\n\nTable of Contents\n\n\n\n\nGetting Started\n\n\nArchitecture\n\n\nWorkflow Examples\n\n\nRecipe1: Download file and save it as local file\n\n\nRecipe2: Export BigQuery query result to Google Drive and notify URL to Slack\n\n\n\n\n\n\nList of tumugi plugins\n\n\n\n\nReleases\n\n\nYou can find releases in \nRubyGems.org\n and can see changelogs at \nHERE\n.\n\n\nLatest version is \nv0.6.3", 
             "title": "Home"
         }, 
         {
@@ -12,12 +12,12 @@
         }, 
         {
             "location": "/#table-of-contents", 
-            "text": "Getting Started  Architecture  Workflow Examples  Recipe1: Download file and save it as local file    List of tumugi plugins", 
+            "text": "Getting Started  Architecture  Workflow Examples  Recipe1: Download file and save it as local file  Recipe2: Export BigQuery query result to Google Drive and notify URL to Slack    List of tumugi plugins", 
             "title": "Table of Contents"
         }, 
         {
             "location": "/#releases", 
-            "text": "You can find releases in  RubyGems.org  and can see changelogs at  HERE .  Latest version is  v0.6.1", 
+            "text": "You can find releases in  RubyGems.org  and can see changelogs at  HERE .  Latest version is  v0.6.3", 
             "title": "Releases"
         }, 
         {

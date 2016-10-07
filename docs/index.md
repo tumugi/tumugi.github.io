@@ -23,10 +23,11 @@ tumugi has not following features:
 - [Architecture](architecture)
 - Workflow Examples
     - [Recipe1: Download file and save it as local file](recipe1)
+    - [Recipe2: Export BigQuery query result to Google Drive and notify URL to Slack](recipe2)
 - [List of tumugi plugins](plugins)
 
 ## Releases
 
 You can find releases in [RubyGems.org](https://rubygems.org/gems/tumugi) and can see changelogs at [HERE](https://github.com/tumugi/tumugi/blob/master/CHANGELOG.md).
 
-Latest version is [v0.6.1](https://github.com/tumugi/tumugi/blob/master/CHANGELOG.md#061-2016-07-11)
+Latest version is [v0.6.3](https://github.com/tumugi/tumugi/blob/master/CHANGELOG.md#v063-2016-08-14)
